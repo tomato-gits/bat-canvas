@@ -1,0 +1,9 @@
+[project]
+name = 'bat-canvas'
+version = '0.0.1'
+
+[project.optional-dependencies]
+dev = [
+    # testing
+    'pytest',
+]
