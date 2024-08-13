@@ -7,3 +7,6 @@ dev = [
     # testing
     'pytest',
 ]
+
+[project.scripts]
+bat = 'bat.cli:BATCLI'
