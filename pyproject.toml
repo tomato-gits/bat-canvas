@@ -2,6 +2,10 @@
 name = 'bat-canvas'
 version = '0.0.1'
 
+dependencies = [
+    'batconf',
+]
+
 [project.optional-dependencies]
 dev = [
     # testing

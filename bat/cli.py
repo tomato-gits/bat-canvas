@@ -93,13 +93,6 @@ def argparser() -> ArgumentParser:
         parents=[conf_cli()],
     )
 
-    commands.add_parser(
-        "test",
-        help="run e2e tests for this service",
-        add_help=False,
-        parents=[testing_cli()],
-    )
-
     return p
 
 
