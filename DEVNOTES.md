@@ -16,7 +16,9 @@ Initial goal is to set up a project that:
   * tests folder contains unit tests for the bat-canvas project
 
 ## running tests
-unit tests located in /tests `pytest tests`
+unit tests located in bat-canvas/bat/tests/ and submodules `pytest bat`
+integration tests in bat-canvas/tests/integration/ 
+end-to-end tests in bat-canvas/tests/e2e/
 
 ## project setup steps
 ### initial project setup

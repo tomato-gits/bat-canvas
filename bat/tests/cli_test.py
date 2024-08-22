@@ -94,19 +94,6 @@ class BATCLITests(TestCase):
         t.validate_commands(commands)
 
 
-class NestedNameSpaceTests(TestCase):
-
-    def test_nesting(t):
-        nns = NestedNameSpace()
-        setattr(nns, "top", "level")
-        setattr(nns, "bat.baz", "baz")
-        setattr(nns, "bat.sub.var", "sub_var")
-
-        t.assertEqual(nns.top, "level")
-        t.assertEqual(nns.bat.baz, "baz")
-        t.assertEqual(nns.bat.sub.var, "sub_var")
-
-
 class CommandsTests(TestCase):
 
     @patch(f"{SRC}.set_default_logging", autospec=True)

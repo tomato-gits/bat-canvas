@@ -10,7 +10,23 @@ dependencies = [
 dev = [
     # testing
     'pytest',
+    'coverage',
+    'pytest-cov',
 ]
 
 [project.scripts]
 bat = 'bat.cli:BATCLI'
+
+
+# === Testing === #
+[tool.pytest.ini_options]
+log_level = "INFO"
+addopts = "--cov=bat --cov-report=term --cov-report=xml"
+python_classes = '*Tests'
+python_files = ["*_test.py", "*_pytest.py"]
+
+[tool.coverage.report]
+fail_under = 100
+skip_covered = true
+show_missing = true
+skip_empty = true
