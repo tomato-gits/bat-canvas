@@ -93,6 +93,14 @@ def argparser() -> ArgumentParser:
         parents=[conf_cli()],
     )
 
+    # add command
+    check_assignment = commands.add_parser(
+        "check_assignment",
+        description="executes command check_assignment",
+        help="for details use check_assignment --help",
+    )
+    check_assignment.set_defaults(func=Commands.check_assignment)
+
     return p
 
 
@@ -119,3 +127,7 @@ class Commands:
     @staticmethod
     def raise_exception(_: Namespace):
         raise RuntimeError("boom!")
+
+    @staticmethod
+    def check_assignment(args: Namespace):
+        print(f"{args=}")

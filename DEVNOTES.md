@@ -9,7 +9,7 @@ Initial goal is to set up a project that:
 
 ## project structure
 * bat-canvas is top-level project
-* pyproject.toml lists dependencies and other project md
+* pyproject.toml lists dependencies and other project installation md
   * scripts folder (temporary) is for reference during development, has example scripts to convert into automations
   * the bat/ module is the source file that contains all the python source for the installable module 
     * bat/tests submodule contains tests for stuff in bat 
@@ -17,8 +17,10 @@ Initial goal is to set up a project that:
 
 ## running tests
 unit tests located in bat-canvas/bat/tests/ and submodules `pytest bat`
+
 integration tests in bat-canvas/tests/integration/ 
-end-to-end tests in bat-canvas/tests/e2e/
+
+end-to-end tests in bat-canvas/tests/e2e/ `pytest tests`
 
 ## project setup steps
 ### initial project setup
@@ -28,5 +30,7 @@ functionality and library with "hello_world" function, and associated unit tests
 * created entrypoint to bat cli interface by defining it in pyproject.toml as bat = 'bat.cli:BATCLI' 
   * installing project `pip install -e .` provides bat-canvas environment with CLI access to commands defined in bat/cli.py, ex: `bat hello`
 
-
+creating first project command 'check_assignment'
+cli_test tests command, adds to commands list, uses mocks for print and hello world for unit test  
+test/cli_test executes check_assignment for e2e test
 

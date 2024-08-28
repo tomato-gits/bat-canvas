@@ -89,6 +89,7 @@ class BATCLITests(TestCase):
     def test_commands(t):
         commands = [
             "hello",
+            "check_assignment",
         ]
 
         t.validate_commands(commands)
@@ -107,3 +108,10 @@ class CommandsTests(TestCase):
             args = Namespace(loglevel=logging.INFO)
             Commands.setup_logging(args)
             set_default_logging.assert_called_with(logging.INFO)
+
+    @patch(f"{SRC}.hello_world", autospec=True)
+    @patch("builtins.print", autospec=True)
+    def test_hello(t,mprint: Mock, hello_world: Mock):
+        args = Namespace()
+        Commands.hello(args)
+        mprint.assert_called_with(hello_world.return_value)
