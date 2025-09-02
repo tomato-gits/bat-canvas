@@ -11,6 +11,9 @@ class TestCli(TestCase):
         t.assertEqual(ret, "Hello World!\n")
 
     def test_check_assignment(t):
-        result = subprocess.run(["bat", "check_assignment"], stdout=subprocess.PIPE)
+        token = "somestring"
+        course_id = 1125693
+        assignment_id = 6912376
+        result = subprocess.run(["bat", "check_assignment", f"--token={token}", f"--courseid={course_id}", f"--assignmentid={assignment_id}"], stdout=subprocess.PIPE)
         ret = result.stdout.decode("utf-8")
         t.assertEqual(ret, "Assignment exists\n")

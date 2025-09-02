@@ -6,7 +6,7 @@ from sys import exit
 
 from .logconf import set_default_logging
 
-from .lib import hello_world
+from .lib import hello_world, check_assignment_cfg
 from .conf import conf_cli
 
 
@@ -100,6 +100,24 @@ def argparser() -> ArgumentParser:
         help="for details use check_assignment --help",
     )
     check_assignment.set_defaults(func=Commands.check_assignment)
+    check_assignment.add_argument(
+        "-t",
+        "--token",
+        dest="token",
+        help="api auth bearer token",
+    )
+    check_assignment.add_argument(
+        "-c",
+        "--courseid",
+        dest="courseid",
+        help="canvas course id",
+    )
+    check_assignment.add_argument(
+        "-a",
+        "--assignmentid",
+        dest="assignmentid",
+        help="canvas assignment id",
+    )
 
     return p
 
@@ -130,4 +148,6 @@ class Commands:
 
     @staticmethod
     def check_assignment(args: Namespace):
-        print(f"{args=}")
+        # ret = check_assignment(token=args.token, courseid=args.courseid, assignmentid=args.assignmentid)
+        ret = check_assignment_cfg()
+        print(ret)

@@ -1,13 +1,48 @@
 from unittest import TestCase
+from unittest.mock import patch, Mock
+from bat.lib import hello_world, check_assignment, check_assignment_cfg
 
-from bat.lib import hello_world
-
+SRC = 'bat.lib'
 
 class LibTests(TestCase):
 
     def test_hello_world(t):
         ret = hello_world()
         t.assertEqual(ret, "Hello World!")
+
+    @patch(f"{SRC}.get",autospec=True)
+    def test_check_assignment(t, get:Mock):
+        courseid = "+courseid+"
+        assignmentid = "+assignmentid+"
+        endpoint = f"https://utexas.instructure.com/api/v1/courses/{courseid}/assignments/{assignmentid}"
+        token = "+token+"
+        headers = {"Authorization": f"Bearer {token}"}
+
+        with t.subTest("assignment exists"):
+            get.return_value.status_code = 200
+            ret = check_assignment(courseid=courseid, assignmentid=assignmentid, token=token)
+            t.assertEqual(ret, "Assignment exists")
+            get.assert_called_with(endpoint, headers=headers)
+
+        get.reset_mock()
+
+        with t.subTest("assignment does not exist"):
+            get.return_value.status_code = 404
+            ret = check_assignment(courseid=courseid, assignmentid=assignmentid, token=token)
+            t.assertEqual(ret, "Assignment does not exist")
+            get.assert_called_with(endpoint, headers=headers)
+
+    # remember! patches get applied in reverse order
+    @patch(f"{SRC}.check_assignment",autospec=True)
+    @patch(f"{SRC}.get_config", autospec=True)
+    def test_check_assignment_cfg(t, get_config:Mock, check_assignment:Mock):
+        # mock get_config, test that it runs get_config without args, then calls check_assignment with params from config
+        ret = check_assignment_cfg()
+
+        cfg = get_config.return_value
+        get_config.assert_called_with()
+        check_assignment.assert_called_with(courseid=cfg.courseid, assignmentid=cfg.assignmentid, token=cfg.token)
+        t.assertIs(ret, check_assignment.return_value)
 
 
 class TempTests(TestCase):

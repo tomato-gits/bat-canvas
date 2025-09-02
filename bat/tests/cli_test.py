@@ -22,6 +22,14 @@ class ArgparserTests(TestCase):
     def test_argparser(t):
         argparser()
 
+    def test_check_assignment(t):
+        ARGS = ["check_assignment", "--token=wwerer", "--courseid=12345", "--assignmentid=666"]
+        parser = argparser()
+        ret = parser.parse_args(ARGS)
+        t.assertEqual(ret.token, "wwerer")
+        t.assertEqual(ret.courseid, "12345")
+        t.assertEqual(ret.assignmentid, "666")
+
 
 class BATCLITests(TestCase):
     exit: callable
@@ -115,3 +123,11 @@ class CommandsTests(TestCase):
         args = Namespace()
         Commands.hello(args)
         mprint.assert_called_with(hello_world.return_value)
+
+    @patch(f"{SRC}.check_assignment_cfg", autospec=True)
+    @patch("builtins.print", autospec=True)
+    def test_check_assignment(t, mprint: Mock, check_assignment_cfg: Mock):
+        args = Namespace(courseid=123,assignmentid=123,token='sometoken')
+        Commands.check_assignment(args)
+        check_assignment_cfg.assert_called_with(courseid=args.courseid, assignmentid=args.assignmentid, token=args.token)
+        mprint.assert_called_with(check_assignment_cfg.return_value)
