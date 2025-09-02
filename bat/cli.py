@@ -6,8 +6,8 @@ from sys import exit
 
 from .logconf import set_default_logging
 
-from .lib import hello_world, check_assignment_cfg
-from .conf import conf_cli
+from .lib import hello_world, check_assignment
+from .conf import conf_cli, get_config
 
 
 log = logging.getLogger("root")
@@ -148,6 +148,6 @@ class Commands:
 
     @staticmethod
     def check_assignment(args: Namespace):
-        # ret = check_assignment(token=args.token, courseid=args.courseid, assignmentid=args.assignmentid)
-        ret = check_assignment_cfg()
+        cfg = get_config(cli_args=args, config_file_name=args.config_file, config_env=args.config_env)
+        ret = check_assignment(token=cfg.token, courseid=cfg.courseid, assignmentid=cfg.assignmentid)
         print(ret)

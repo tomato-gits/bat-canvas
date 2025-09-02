@@ -124,10 +124,15 @@ class CommandsTests(TestCase):
         Commands.hello(args)
         mprint.assert_called_with(hello_world.return_value)
 
-    @patch(f"{SRC}.check_assignment_cfg", autospec=True)
+    @patch(f"{SRC}.check_assignment", autospec=True)
+    @patch(f"{SRC}.get_config", autospec=True)
     @patch("builtins.print", autospec=True)
-    def test_check_assignment(t, mprint: Mock, check_assignment_cfg: Mock):
-        args = Namespace(courseid=123,assignmentid=123,token='sometoken')
+    def test_check_assignment(t, mprint: Mock, get_config: Mock, check_assignment: Mock):
+        args = Namespace(courseid=123, assignmentid=123, token='sometoken', config_file='config.yml', config_env='dev')
+        cfg = get_config.return_value
+
         Commands.check_assignment(args)
-        check_assignment_cfg.assert_called_with(courseid=args.courseid, assignmentid=args.assignmentid, token=args.token)
-        mprint.assert_called_with(check_assignment_cfg.return_value)
+
+        get_config.assert_called_with(cli_args=args, config_file_name='config.yml', config_env='dev')
+        check_assignment.assert_called_with(courseid=cfg.courseid, assignmentid=cfg.assignmentid, token=cfg.token)
+        mprint.assert_called_with(check_assignment.return_value)

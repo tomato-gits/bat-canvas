@@ -71,6 +71,7 @@ target/
 
 # Jupyter Notebook
 .ipynb_checkpoints
+notes.ipynb
 
 # pyenv
 .python-version
@@ -81,7 +82,7 @@ celerybeat-schedule
 # SageMath parsed files
 *.sage.py
 
-# Environments
+# Environments and config
 .envrc
 .env
 .venv
@@ -90,6 +91,8 @@ venv/
 ENV/
 env.bak/
 venv.bak/
+config.ini
+config.yml
 
 # Spyder project settings
 .spyderproject
@@ -109,4 +112,3 @@ venv.bak/
 
 # Project development stuff
 scripts/keys/
-notes.ipynb

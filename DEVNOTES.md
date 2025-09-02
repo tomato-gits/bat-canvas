@@ -30,12 +30,20 @@ functionality and library with "hello_world" function, and associated unit tests
 * created entrypoint to bat cli interface by defining it in pyproject.toml as bat = 'bat.cli:BATCLI' 
   * installing project `pip install -e .` provides bat-canvas environment with CLI access to commands defined in bat/cli.py, ex: `bat hello`
 
-creating first project command 'check_assignment'
+#### creating first project command 'check_assignment'
 bat/tests/cli_test tests command, adds to commands list, uses mocks for print and hello world for unit test  
 tests/cli_test executes check_assignment for e2e test
 
 check_assignment is defined as command, when run as bat check_assignment returns the args
 bat check_assignment --help returns a generic help string
+
+check_assignment Command takes the token, courseid, and assignmentid from the CLI args
+- these args are passed to get_config, which can set defaults for any args not included (usually token)
+- check_assignment Command calls check_assignment library function, passing the values from the config 
+
+next stuff to do:
+- update to newer batconf and switch to config.ini, maybe set defaults, update schema
+- add integration test with batconf, test using args in favor of config values
 
 
 I want to be able to: 

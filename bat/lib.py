@@ -8,11 +8,13 @@ def check_assignment(courseid: str, assignmentid: str, token: str):
     # TODO: get instance and credentials from config
     headers = {"Authorization": f"Bearer {token}"}
     r = get(f"https://utexas.instructure.com/api/v1/courses/{courseid}/assignments/{assignmentid}", headers=headers)
-    # TODO: handle 401 unauthorized error, or other unknown error
+    # TODO: handle unknown error, break into separate tests, or replace requests with canvasapi library
     if r.status_code == 200:
         return "Assignment exists"
     if r.status_code == 404:
         return "Assignment does not exist"
+    if r.status_code == 401:
+        return "Unauthorized error"
 
 # config needs to include args, if present
 def check_assignment_cfg():

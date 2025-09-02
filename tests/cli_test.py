@@ -11,9 +11,19 @@ class TestCli(TestCase):
         t.assertEqual(ret, "Hello World!\n")
 
     def test_check_assignment(t):
-        token = "somestring"
+        config_file = 'config.yml'
+        config_env = 'dev'
+        # token = "not_a_valid_token"
         course_id = 1125693
         assignment_id = 6912376
-        result = subprocess.run(["bat", "check_assignment", f"--token={token}", f"--courseid={course_id}", f"--assignmentid={assignment_id}"], stdout=subprocess.PIPE)
+        result = subprocess.run([
+            "bat",
+            f"--config_file={config_file}",
+            f"--config_env={config_env}",
+            "check_assignment",
+            # f"--token={token}",
+            f"--courseid={course_id}",
+            f"--assignmentid={assignment_id}",
+        ], stdout=subprocess.PIPE)
         ret = result.stdout.decode("utf-8")
-        t.assertEqual(ret, "Assignment exists\n")
+        t.assertEqual(ret, "Unauthorized error\n")
