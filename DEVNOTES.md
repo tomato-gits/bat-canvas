@@ -31,6 +31,25 @@ functionality and library with "hello_world" function, and associated unit tests
   * installing project `pip install -e .` provides bat-canvas environment with CLI access to commands defined in bat/cli.py, ex: `bat hello`
 
 creating first project command 'check_assignment'
-cli_test tests command, adds to commands list, uses mocks for print and hello world for unit test  
-test/cli_test executes check_assignment for e2e test
+bat/tests/cli_test tests command, adds to commands list, uses mocks for print and hello world for unit test  
+tests/cli_test executes check_assignment for e2e test
 
+check_assignment is defined as command, when run as bat check_assignment returns the args
+bat check_assignment --help returns a generic help string
+
+
+I want to be able to: 
+- pass in the course id and assignment id
+- optionally pass in the instance? or have a default?
+- get the instance url and api key from somewhere (file?)
+- make the api call using canvasapi (need to install that, list as requirement)
+- check return from api call, distinguish  between "no resource" and real data
+
+For future: set up test course/assignments/etc in instances, make file that has course id, assignment id, etc
+for various cases (published, assignment type etc) and them import those into test functions, instead of hard-coding 
+id's in the test cases. 
+Also create a wrapper for task functions that first calls get_config (maybe can take arg for instance, like 'prod' or 
+'test'?) and then calls the task function (check_assignments_cfg and check_assignments)
+The config will have the Canvas instance URL and the access token. Do we want to maintain the ability to pass in the 
+token as a CLI arg?
+Also replace requests with the canvasapi library
