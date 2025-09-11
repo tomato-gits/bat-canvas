@@ -11,7 +11,7 @@ class TestCli(TestCase):
         t.assertEqual(ret, "Hello World!\n")
 
     def test_check_assignment(t):
-        config_file = 'config.yml'
+        config_file = 'config.ini'
         config_env = 'test'
         # token = "not_a_valid_token"
         course_id = 1125693

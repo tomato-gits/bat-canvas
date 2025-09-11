@@ -7,7 +7,7 @@ from sys import exit
 from .logconf import set_default_logging
 
 from .lib import hello_world, check_assignment
-from .conf import conf_cli, get_config
+from .conf import conf_cli, get_config, CONFIG_FILE_NAME
 
 
 log = logging.getLogger("root")
@@ -57,9 +57,9 @@ def argparser() -> ArgumentParser:
         "--conf",
         "--config_file",
         dest="config_file",
-        default=None,
+        default=CONFIG_FILE_NAME,
         help="specify a config file to get environment details from."
-        " default=./config.yaml",
+        f" default is {CONFIG_FILE_NAME}",
     )
     p.add_argument(
         "-e",

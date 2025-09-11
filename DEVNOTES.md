@@ -49,7 +49,9 @@ next stuff to do:
   - old version imported GlobalConfig into conf.py, that was the schema. old version needed module name to match, had schema in init for module
   - new version more flexible, now my schema (the dataclass) is defined in conf.py
 - add integration test with batconf, test using args in favor of config values
-
+- detect missing course in check_assignment
+- create config file specifically for testing
+- create diagnostic tests (use default config, not the testing one)
 
 I want to be able to: 
 - pass in the course id and assignment id

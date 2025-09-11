@@ -4,27 +4,29 @@ from dataclasses import dataclass
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from textwrap import dedent
 from logging import getLogger
+from pathlib import Path
 
 from batconf.manager import Configuration, ConfigProtocol
 from batconf.source import SourceList
 from batconf.sources.args import CliArgsConfig, Namespace
 from batconf.sources.env import EnvConfig
-from batconf.sources.file import FileConfig
+from batconf.sources.ini import IniConfig
 from batconf.sources.dataclass import DataclassConfig
 
+CONFIG_FILE_NAME = str(Path.cwd() / "config.ini")
+
 @dataclass
-class GlobalConfig:
+class ConfigSchema:
     token: str
 
 def get_config(
-    # Known issue: https://github.com/python/mypy/issues/4536
-    config_class: ConfigProtocol = GlobalConfig,  # type: ignore
+    config_class: ConfigProtocol = ConfigSchema,
+    cfg_path: str = 'batcanvas',
     cli_args: Namespace = None,
-    config_file: FileConfig = None,
-    config_file_name: str = None,
+    config_file: IniConfig = None,
+    config_file_name: str = CONFIG_FILE_NAME,
     config_env: str = None,
 ) -> Configuration:
-
     # Build a prioritized config source list
     config_sources = [
         CliArgsConfig(cli_args) if cli_args else None,
@@ -32,14 +34,14 @@ def get_config(
         (
             config_file
             if config_file
-            else FileConfig(config_file_name, config_env=config_env)
+            else IniConfig(config_file_name, config_env=config_env)
         ),
         DataclassConfig(config_class),
     ]
 
     source_list = SourceList(config_sources)
 
-    return Configuration(source_list, config_class)
+    return Configuration(source_list, config_class, path=cfg_path)
 
 
 log = getLogger(__name__)
@@ -81,7 +83,6 @@ def global_config(
 ) -> str:
     """Return a string representing the current configuration"""
     cfg = get_config(
-        config_class=GlobalConfig,
         cli_args=cli_args,
         config_file_name=config_file_name,
         config_env=config_env,
