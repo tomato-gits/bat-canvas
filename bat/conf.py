@@ -1,5 +1,6 @@
 from typing import Optional
 
+from dataclasses import dataclass
 from argparse import ArgumentParser, RawDescriptionHelpFormatter
 from textwrap import dedent
 from logging import getLogger
@@ -11,8 +12,9 @@ from batconf.sources.env import EnvConfig
 from batconf.sources.file import FileConfig
 from batconf.sources.dataclass import DataclassConfig
 
-from . import GlobalConfig
-
+@dataclass
+class GlobalConfig:
+    token: str
 
 def get_config(
     # Known issue: https://github.com/python/mypy/issues/4536

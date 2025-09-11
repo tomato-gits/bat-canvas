@@ -41,8 +41,13 @@ check_assignment Command takes the token, courseid, and assignmentid from the CL
 - these args are passed to get_config, which can set defaults for any args not included (usually token)
 - check_assignment Command calls check_assignment library function, passing the values from the config 
 
+to run from CLI with token in config.yml and course id and assignment id in args:
+bat -c config.yml check_assignment -c 123456 -a 122334
+
 next stuff to do:
 - update to newer batconf and switch to config.ini, maybe set defaults, update schema
+  - old version imported GlobalConfig into conf.py, that was the schema. old version needed module name to match, had schema in init for module
+  - new version more flexible, now my schema (the dataclass) is defined in conf.py
 - add integration test with batconf, test using args in favor of config values
 
 

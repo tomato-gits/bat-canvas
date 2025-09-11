@@ -12,7 +12,7 @@ class TestCli(TestCase):
 
     def test_check_assignment(t):
         config_file = 'config.yml'
-        config_env = 'dev'
+        config_env = 'test'
         # token = "not_a_valid_token"
         course_id = 1125693
         assignment_id = 6912376
