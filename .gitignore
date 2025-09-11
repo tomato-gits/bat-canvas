@@ -112,3 +112,4 @@ config.yml
 
 # Project development stuff
 scripts/keys/
+local/
